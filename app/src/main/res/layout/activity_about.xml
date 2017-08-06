@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.wareproz.mac.gravy.AboutActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="A better way to get to your destination"
+        android:id="@+id/car_number"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="www.gravy.com.ng"
+        android:id="@+id/textView15"
+        android:layout_below="@+id/car_number"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/holo_blue_light" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Version 1.2"
+        android:id="@+id/textView16"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/textView15"
+        android:layout_alignLeft="@+id/car_number"
+        android:layout_alignStart="@+id/car_number"
+        android:id="@+id/linearLayout2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Like Us On Facebook"
+            android:id="@+id/facebook" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/dropoff_location"
+            android:layout_marginTop="5dp"
+            android:background="#F2F2F2"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Follow Us On Twitter"
+            android:id="@+id/twitter" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/dropoff_location"
+            android:layout_marginTop="5dp"
+            android:background="#F2F2F2"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Legal"
+            android:id="@+id/legal" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/dropoff_location"
+            android:layout_marginTop="5dp"
+            android:background="#F2F2F2"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Contact Us / Reports"
+            android:id="@+id/contact" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/dropoff_location"
+            android:layout_marginTop="5dp"
+            android:background="#F2F2F2"  />
+
+    </LinearLayout>
+
+</RelativeLayout>

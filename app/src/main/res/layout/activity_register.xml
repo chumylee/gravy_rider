@@ -1,0 +1,163 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.wareproz.mac.gravy.RegisterActivity">
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+<!--
+    <Button
+        android:id="@+id/facebook"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Login with Facebook"
+        android:textStyle="bold"
+        android:background="#3b5998"
+        android:clickable="false"
+        android:textColor="#ffffff"
+        android:textSize="18dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text=" OR "
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView" />
+
+    -->
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/toppan"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/firstname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:hint="First Name"
+                android:ems="8"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/lastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/firstname"
+                android:hint="Last Name"
+                android:maxLines="1"
+                android:ems="8"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/firstname"
+                android:hint="Username"
+                android:ems="8"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/username"
+                android:layout_below="@+id/lastname"
+                android:hint="Password"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/username"
+                android:hint="Email Address"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/email"
+                android:hint="Phone Number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="textPhonetic" />
+
+            <Button
+                android:id="@+id/regsubmit"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/phone"
+                android:text="REGISTER"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:textSize="20dp"
+                android:background="#7DC24F" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="BY CLICKING REGISTER YOU ACCEPT OUR"
+                android:id="@+id/textView2"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_below="@+id/regsubmit"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="TERMS AND CONDITIONS"
+                android:id="@+id/terms"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#005A98"
+                android:textAlignment="center"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

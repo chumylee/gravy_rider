@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.wareproz.mac.gravy.RideRequestActivity">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_alignParentTop="true"
+        android:layout_height="500dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:layout_above="@+id/contact_rider"
+        android:layout_centerHorizontal="true"
+        android:background="#FFFFFF"
+        android:id="@+id/relativeLayout"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.50"
+            android:background="#FFFFFF">
+
+            <ImageView
+                android:id="@+id/userpic"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:src="@drawable/profilepic"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Benson"
+                android:layout_marginTop="10dp"
+                android:id="@+id/driver_name"
+                android:layout_below="@+id/userpic"
+                android:layout_centerHorizontal="true"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="4.3"
+                android:id="@+id/dropoff_location"
+                android:layout_below="@+id/driver_name"
+                android:layout_centerHorizontal="true"
+                android:textSize="14dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.50"
+            android:background="#FFFFFF">
+
+            <ImageView
+                android:id="@+id/car_picture"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/car" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Toyota"
+                android:layout_marginTop="10dp"
+                android:id="@+id/pickup_location"
+                android:layout_below="@+id/car_picture"
+                android:layout_centerHorizontal="true"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="eyk555ky"
+                android:id="@+id/car_number"
+                android:layout_below="@+id/pickup_location"
+                android:layout_centerHorizontal="true"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="contact rider"
+        android:id="@+id/contact_rider"
+        android:background="#7DC24F"
+        android:textColor="#fff"
+        android:layout_above="@+id/relativeLayout5"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/relativeLayout5"
+        android:layout_height="65dp"
+        android:background="@drawable/rectangle_background"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/rectangle_background"
+            android:layout_weight="0.50">
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView7"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/stopwatch" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="3 MINS AWAY"
+                android:id="@+id/eta"
+                android:textIsSelectable="false"
+                android:textSize="13dp"
+                android:layout_below="@+id/imageView7"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/rectangle_background"
+            android:layout_weight="0.50"
+            android:id="@+id/cancel">
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView6"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/error" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="CANCEL THIS RIDE"
+                android:id="@+id/textView15"
+                android:layout_below="@+id/imageView6"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textIsSelectable="false"
+                android:textSize="13dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
