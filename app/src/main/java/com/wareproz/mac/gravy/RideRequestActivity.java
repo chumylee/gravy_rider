@@ -246,6 +246,8 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
     private class RequestRide extends AsyncTask<Void, Void, Void> {
 
         String json_result;
+        int TIMEOUT_DURATION = 60000*5; //timeout of 5 mins
+        Thread timer;
 
         @Override
         protected void onPreExecute() {
@@ -256,6 +258,28 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
             pDialog.setCancelable(false);
             pDialog.show();
 
+            //start thread to cancel ride request after timeout
+            timer = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(TIMEOUT_DURATION);
+                        if(pDialog.isShowing()){
+                            pDialog.cancel();
+                            RequestRide.this.cancel(true);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(RideRequestActivity.this, "No drivers available to accept the ride. Please try again after some time", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+            timer.start();
         }
 
         @Override
