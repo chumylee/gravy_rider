@@ -201,7 +201,7 @@ public class SettingsActivity extends AppCompatActivity {
             HttpHandler sh = new HttpHandler();
 
             // Making a request to url and getting response
-            String url = "driver_logout.php?id="+ id;
+            String url = "rider_logout.php?id="+ id;
             String jsonStr = sh.makeServiceCall(url);
 
             if (jsonStr != null) {

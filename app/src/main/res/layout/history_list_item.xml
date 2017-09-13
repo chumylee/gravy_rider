@@ -110,27 +110,27 @@
 
 
                     <ImageView
+                        android:id="@+id/vehicleIcon"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:id="@+id/vehicleIcon"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="7dp"
-                        android:src="@drawable/portfolio" />
+                        android:src="@drawable/car2" />
 
                     <TextView
+                        android:id="@+id/vehicle_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_marginLeft="5dp"
-                        android:text="Vehicle Name"
-                        android:id="@+id/ride_class"
                         android:layout_alignTop="@+id/vehicleIcon"
                         android:layout_marginBottom="7dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/vehicleIcon"
                         android:layout_toRightOf="@+id/vehicleIcon"
-                        android:layout_toEndOf="@+id/vehicleIcon" />
+                        android:text="Vehicle Name"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </RelativeLayout>
 
@@ -178,15 +178,15 @@
 
 
                     <ImageView
+                        android:id="@+id/driverIcon1"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:id="@+id/driverIcon1"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="7dp"
-                        android:src="@drawable/money" />
+                        android:src="@drawable/notes" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -216,19 +216,19 @@
                         android:layout_alignParentStart="true"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="7dp"
-                        android:src="@drawable/star" />
+                        android:src="@drawable/money" />
 
                     <TextView
+                        android:id="@+id/payment_method"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_marginLeft="5dp"
-                        android:text="Payment Method"
-                        android:id="@+id/ride_rating"
                         android:layout_alignTop="@+id/vehicleIcon1"
                         android:layout_marginBottom="7dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/vehicleIcon1"
                         android:layout_toRightOf="@+id/vehicleIcon1"
-                        android:layout_toEndOf="@+id/vehicleIcon1" />
+                        android:text="Payment Method"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </RelativeLayout>
 
