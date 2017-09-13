@@ -145,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:hint="Your Currnet Location"
+                android:hint="Your Current Location"
                 android:layout_marginTop="1dp"
                 android:maxLines="1"
                 android:singleLine="true"

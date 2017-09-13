@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -94,10 +95,6 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
         Bundle bundle = getIntent().getExtras();
         pickup_gps = bundle.getString("pickup_gps");
         pickup_address = bundle.getString("pickup_address");
-
-
-        // Session class instance
-        session = new SessionManagement(getApplicationContext());
 
         initMap();
 
@@ -186,12 +183,16 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
         });
 
 
-        Button requetride = (Button) findViewById(R.id.contact_rider);
-        requetride.setOnClickListener(new View.OnClickListener() {
+        Button requestride = (Button) findViewById(R.id.contact_rider);
+        requestride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //call the request for ride script
-                new RequestRide().execute();
+                if(pickup_gps == null || dropoff_gps == null){
+                    Toast.makeText(RideRequestActivity.this, "Your location and destination are required", Toast.LENGTH_LONG).show();
+                }else {
+                    new RequestRide().execute();
+                }
 
             }
         });
@@ -205,7 +206,7 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 Log.i(TAG, "Place: " + place.getName() + "Gps: " + place.getLatLng());
                 pickUp.setText(place.getName().toString());
-                pickup_name = place.getName().toString();
+                pickup_address = place.getName().toString();
                 pickup_gps = place.getLatLng().toString();
                 pickup_gps = pickup_gps.replace("lat/lng: (","");
                 pickup_gps = pickup_gps.replace(")","");
@@ -266,7 +267,7 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
             try {
                 url_pickup_gps = URLEncoder.encode(pickup_gps, "utf-8");
                 url_dropoff_gps = URLEncoder.encode(dropoff_gps, "utf-8");
-                url_pickup_address = URLEncoder.encode(pickup_name, "utf-8");
+                url_pickup_address = URLEncoder.encode(pickup_address, "utf-8");
                 url_dropoff_name = URLEncoder.encode(dropoff_name, "utf-8");
                 url_distance = URLEncoder.encode(distance, "utf-8");
             } catch (UnsupportedEncodingException e) {
@@ -275,7 +276,6 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
             String url = "request_ride.php?pickupGps="+ url_pickup_gps + "&dropoffGps=" + url_dropoff_gps + "&pickupAddress=" + url_pickup_address + "&dropoffAddress=" + url_dropoff_name + "&distance=" + url_distance;
             String jsonStr = sh.makeServiceCall(url);
 
-            /*
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -306,7 +306,7 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
                 });
 
             }
-            */
+
             return null;
         }
 
