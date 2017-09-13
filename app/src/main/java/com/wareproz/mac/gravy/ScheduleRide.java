@@ -172,13 +172,22 @@ public class ScheduleRide extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-        Button requestride = (Button) findViewById(R.id.contact_rider);
+        Button requestride = (Button) findViewById(R.id.schedule_ride);
         requestride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //call the request for ride script
-                new RequestRide().execute();
+                if(pickup_name == null || dropoff_name == null){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ScheduleRide.this, "Please fill in both pickup and dropoff locations", Toast.LENGTH_LONG).show();
+                        }
+                    });
 
+                }else {
+                    new RequestRide().execute();
+                }
             }
         });
 
@@ -256,6 +265,8 @@ public class ScheduleRide extends AppCompatActivity implements OnMapReadyCallbac
                 url_dropoff_name = URLEncoder.encode(dropoff_name, "utf-8");
                 url_distance = URLEncoder.encode(distance, "utf-8");
             } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }catch(NullPointerException e){
                 e.printStackTrace();
             }
             String url = "schedule_ride.php?pickupGps="+ url_pickup_gps + "&dropoffGps=" + url_dropoff_gps + "&pickupAddress=" + url_pickup_address + "&dropoffAddress=" + url_dropoff_name + "&distance=" + url_distance;
