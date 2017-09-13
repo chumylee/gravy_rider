@@ -62,7 +62,6 @@ import java.util.List;
 public class ScheduleRide extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener {
 
     String id, pickup_gps, pickup_address, dropoff_gps, dropoff_name,pickup_name;
-    Button request_ride;
     EditText pickUp, dropOff;
     Globals g = Globals.getInstance();
     private ProgressDialog pDialog;
@@ -84,8 +83,6 @@ public class ScheduleRide extends AppCompatActivity implements OnMapReadyCallbac
         // Session Manager
         session = new SessionManagement(getApplicationContext());
         session.checkLogin();
-
-        request_ride = (Button) findViewById(R.id.contact_rider);
 
         // Session class instance
         session = new SessionManagement(getApplicationContext());
@@ -175,13 +172,22 @@ public class ScheduleRide extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-        Button requetride = (Button) findViewById(R.id.contact_rider);
-        requetride.setOnClickListener(new View.OnClickListener() {
+        Button requestride = (Button) findViewById(R.id.schedule_ride);
+        requestride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //call the request for ride script
-                new RequestRide().execute();
+                if(pickup_name == null || dropoff_name == null){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ScheduleRide.this, "Please fill in both pickup and dropoff locations", Toast.LENGTH_LONG).show();
+                        }
+                    });
 
+                }else {
+                    new RequestRide().execute();
+                }
             }
         });
 
@@ -260,6 +266,8 @@ public class ScheduleRide extends AppCompatActivity implements OnMapReadyCallbac
                 url_distance = URLEncoder.encode(distance, "utf-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
+            }catch(NullPointerException e){
+                e.printStackTrace();
             }
             String url = "schedule_ride.php?pickupGps="+ url_pickup_gps + "&dropoffGps=" + url_dropoff_gps + "&pickupAddress=" + url_pickup_address + "&dropoffAddress=" + url_dropoff_name + "&distance=" + url_distance;
             String jsonStr = sh.makeServiceCall(url);
@@ -305,14 +313,18 @@ public class ScheduleRide extends AppCompatActivity implements OnMapReadyCallbac
                 pDialog.dismiss();
 
             //do something with what is returned
-            if (json_result.equals("1")){
-                // Creating user login session and store some stuff
-                Toast.makeText(ScheduleRide.this,"Successfully Booked",Toast.LENGTH_LONG).show();
+            if(json_result != null){
+                if (json_result.equals("1")){
+                    // Creating user login session and store some stuff
+                    Toast.makeText(ScheduleRide.this,"Successfully Booked",Toast.LENGTH_LONG).show();
+                }else{
+                    //
+                    Toast.makeText(ScheduleRide.this,"Unable to book, Contact Admin",Toast.LENGTH_LONG).show();
+                }
+                finish();
             }else{
-                //
-                Toast.makeText(ScheduleRide.this,"Unable to book, Contact Admin",Toast.LENGTH_LONG).show();
+                Toast.makeText(ScheduleRide.this, "Unable to schedule ride. Please try again later", Toast.LENGTH_LONG).show();
             }
-            finish();
         }
 
     }
