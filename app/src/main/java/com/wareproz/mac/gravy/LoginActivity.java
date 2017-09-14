@@ -109,10 +109,6 @@ public class LoginActivity extends AppCompatActivity {
 //                Token = session.getTokenDetails();
 //            }
             Token = g.getToken();
-            if(Token == null){ //if token is null at point of login, start activity to update token once it becomes available
-                Intent startUpdateTokenService = new Intent(LoginActivity.this, TokenUpdaterService.class);
-                startService(startUpdateTokenService);
-            }
 
             String url = "rider_login.php?username="+ email +"&password="+ password +"&role=3&token="+ Token;
             String jsonStr = sh.makeServiceCall(url);
@@ -170,10 +166,17 @@ public class LoginActivity extends AppCompatActivity {
             if (json_result.equals("1")){
                 // Creating user login session and store some stuff
                 session.createLoginSession(email,id,first_name,last_name,phone,invite_code,user_picture);
+
                 //store token in preference
                 if(!session.hasToken()) {
                     session.storeToken(Token);
                 }
+
+                if(Token == null){ //if token is null at point of login, start activity to update token once it becomes available
+                    Intent startUpdateTokenService = new Intent(LoginActivity.this, TokenUpdaterService.class);
+                    startService(startUpdateTokenService);
+                }
+
                 //open home page
                 Intent mIntent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(mIntent);
