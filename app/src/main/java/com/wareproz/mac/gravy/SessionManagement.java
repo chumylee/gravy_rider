@@ -65,6 +65,7 @@ public class SessionManagement {
         editor.putString(PHONE, phone);
         editor.putString(INVITE_CODE, invite_code);
         editor.putString(USER_PICTURE, user_picture);
+        storeToken();
         // commit changes
         editor.commit();
     }
@@ -76,6 +77,11 @@ public class SessionManagement {
         // Storing token in pref2
         editor2.putString("token", token);
         // commit changes
+        editor2.commit();
+    }
+
+    public void storeToken(){
+        editor2.putString("Token", Globals.getInstance().getToken());
         editor2.commit();
     }
 

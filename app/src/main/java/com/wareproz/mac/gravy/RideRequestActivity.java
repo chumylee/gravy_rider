@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -59,6 +60,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RideRequestActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -77,6 +79,15 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
     private LocationRequest mLocationRequest;
     Marker origMarker, destMarker;
     String distance, duration;
+
+    CancelRequestThread timer;
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(timer != null)
+            timer.interruptTimer = true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,11 +254,33 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
 
     }
 
+    private class CancelRequestThread implements Runnable{
+        boolean interruptTimer = false;
+        AsyncTask task;
+
+        public CancelRequestThread(AsyncTask task){
+            this.task = task;
+        }
+
+        public void run(){
+            if(!interruptTimer) {
+                if (pDialog.isShowing()) {
+                    pDialog.cancel();
+                    task.cancel(true);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(RideRequestActivity.this, "No drivers available to accept the ride. Please try again after some time", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        }
+    }
     private class RequestRide extends AsyncTask<Void, Void, Void> {
 
         String json_result;
         int TIMEOUT_DURATION = 60000*5; //timeout of 5 mins
-        Thread timer;
 
         @Override
         protected void onPreExecute() {
@@ -259,27 +292,8 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
             pDialog.show();
 
             //start thread to cancel ride request after timeout
-            timer = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(TIMEOUT_DURATION);
-                        if(pDialog.isShowing()){
-                            pDialog.cancel();
-                            RequestRide.this.cancel(true);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(RideRequestActivity.this, "No drivers available to accept the ride. Please try again after some time", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    }catch(InterruptedException e){
-                        e.printStackTrace();
-                    }
-                }
-            });
-            timer.start();
+            timer = new CancelRequestThread(RequestRide.this);
+            new Handler().postDelayed(timer, TIMEOUT_DURATION);
         }
 
         @Override
@@ -297,7 +311,11 @@ public class RideRequestActivity extends AppCompatActivity implements OnMapReady
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            String url = "request_ride.php?pickupGps="+ url_pickup_gps + "&dropoffGps=" + url_dropoff_gps + "&pickupAddress=" + url_pickup_address + "&dropoffAddress=" + url_dropoff_name + "&distance=" + url_distance;
+            SessionManagement session = new SessionManagement(getApplicationContext());
+            Map<String,String> user = session.getUserDetails();
+            String uid = user.get(SessionManagement.KEY_ID);
+            String url = "request_ride.php?pickupGps="+ url_pickup_gps + "&dropoffGps=" + url_dropoff_gps + "&pickupAddress=" +
+                    url_pickup_address + "&dropoffAddress=" + url_dropoff_name + "&distance=" + url_distance + "&riderId=" + uid;
             String jsonStr = sh.makeServiceCall(url);
 
             if (jsonStr != null) {

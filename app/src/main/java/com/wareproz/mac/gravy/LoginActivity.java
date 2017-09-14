@@ -103,11 +103,17 @@ public class LoginActivity extends AppCompatActivity {
             HttpHandler sh = new HttpHandler();
 
             // Making a request to url and getting response
-            if(!session.hasToken()) {
-                Token = g.getToken();
-            }else{
-                Token = session.getTokenDetails();
+//            if(!session.hasToken()) {
+//                Token = g.getToken();
+//            }else{
+//                Token = session.getTokenDetails();
+//            }
+            Token = g.getToken();
+            if(Token == null){ //if token is null at point of login, start activity to update token once it becomes available
+                Intent startUpdateTokenService = new Intent(LoginActivity.this, TokenUpdaterService.class);
+                startService(startUpdateTokenService);
             }
+
             String url = "rider_login.php?username="+ email +"&password="+ password +"&role=3&token="+ Token;
             String jsonStr = sh.makeServiceCall(url);
 
