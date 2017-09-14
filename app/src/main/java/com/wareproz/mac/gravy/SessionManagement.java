@@ -73,13 +73,6 @@ public class SessionManagement {
     /**
      * Store Token
      * */
-    public void storeToken (String token){
-        // Storing token in pref2
-        editor2.putString("token", token);
-        // commit changes
-        editor2.commit();
-    }
-
     public void storeToken(){
         editor2.putString("Token", Globals.getInstance().getToken());
         editor2.commit();

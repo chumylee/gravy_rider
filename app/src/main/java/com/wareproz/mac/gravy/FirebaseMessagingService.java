@@ -53,6 +53,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             car_model = remoteMessage.getData().get("car_model");
             car_number = remoteMessage.getData().get("car_number");
             driver_name = remoteMessage.getData().get("driver_name");
+            driver_id = remoteMessage.getData().get("driver_id");
             driver_rating = remoteMessage.getData().get("driver_rating");
             driver_phone = remoteMessage.getData().get("driver_phone");
             driver_picture = remoteMessage.getData().get("driver_picture");
@@ -68,6 +69,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             i.putExtra("car_model", car_model);
             i.putExtra("car_number", car_number);
             i.putExtra("driver_name", driver_name);
+            i.putExtra("driver_id", driver_id);
             i.putExtra("driver_rating", driver_rating);
             i.putExtra("driver_phone", driver_phone);
             i.putExtra("driver_picture", driver_picture);

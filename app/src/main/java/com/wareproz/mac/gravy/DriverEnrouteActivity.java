@@ -12,6 +12,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -41,6 +42,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,7 +63,7 @@ public class DriverEnrouteActivity extends AppCompatActivity implements OnMapRea
     TextView txtDriverName, txtDriverRating, txtVehicleModel, txtVehicleNumber, txtEta;
     String ride_id, car_model, car_number, driver_name, driver_rating, driver_phone,
             driver_picture, vehicle_image, pickup_gps, pickup_address, driver_location,
-            dropoff_gps, dropoff_name, id;
+            dropoff_gps, dropoff_name, id, driver_id;
     Button contact_rider;
     RelativeLayout cancel;
 
@@ -99,6 +101,7 @@ public class DriverEnrouteActivity extends AppCompatActivity implements OnMapRea
         car_model = bundle.getString("car_model");
         car_number = bundle.getString("car_number");
         driver_name = bundle.getString("driver_name");
+        driver_id = bundle.getString("driver_id");
         driver_rating = bundle.getString("driver_rating");
         driver_phone = bundle.getString("driver_phone");
         driver_picture = bundle.getString("driver_picture");
@@ -156,6 +159,17 @@ public class DriverEnrouteActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onClick(View view) {
                 new CancelRide().execute();
+            }
+        });
+
+        //start task to regularly get driver's location
+        final int UPDATE_INTERVAL = 5000; //update every 5 seconds
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                new GetDriverLocation().execute();
+                handler.postDelayed(this, UPDATE_INTERVAL);
             }
         });
 
@@ -289,7 +303,7 @@ public class DriverEnrouteActivity extends AppCompatActivity implements OnMapRea
         }
 
         MarkerOptions options = new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.driver_marker))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car))
                 .position(driverLatLng);
         driverMarker =  mGoogleMap.addMarker(options);
 
@@ -567,5 +581,43 @@ public class DriverEnrouteActivity extends AppCompatActivity implements OnMapRea
         }
     }
 
+    private class GetDriverLocation extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = "drivers_locations.php?driverId=" + driver_id;
+            HttpHandler handler = new HttpHandler();
+            String response = handler.makeServiceCall(url);
+            if(response != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(response);
+                    if (jsonObj.getString("json_result").equals("1")) {
+                        JSONArray array = jsonObj.getJSONArray("locations");
+                        if (array.length() > 0) {
+                            driver_location = array.getJSONObject(0).getString("latlngs");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+//                                    Toast.makeText(DriverEnrouteActivity.this, driver_location, Toast.LENGTH_SHORT).show();
+                                    handleNewLocation(null);
+                                }
+                            });
+                        }
+                    }
+                } catch (final JSONException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+            }
+            return null;
+        }
+    }
 
 }

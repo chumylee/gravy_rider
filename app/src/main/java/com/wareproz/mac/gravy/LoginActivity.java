@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //store token in preference
                 if(!session.hasToken()) {
-                    session.storeToken(Token);
+                    session.storeToken();
                 }
 
                 if(Token == null){ //if token is null at point of login, start activity to update token once it becomes available
